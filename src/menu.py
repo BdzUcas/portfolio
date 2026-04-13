@@ -15,10 +15,11 @@ game_descriptions = {
     "Movie Recommender": ['### Movie Recommender ###','A program that lets you search through a list of movies','It accepts multiple conditions based on many prerequisites such as rating, title, or director.','When making this project i learned how to sort through and utilize data from files.','I also learned how to store conditions and search with them.','I challenged myself to make my functions very modulat in this project.','I have used them many times since.'],
     "Pet Simulator": ['### Pet Simulator ###','A game where you take care of pets.','Be careful, as everything you do costs time','Use text prompts to navigate your life as a pet owner and perform various actions such as shopping, working, and playing.','In this project i learned how to properly implement objects and classes','and how to store objects in files','It was challenging to implement proper choices off of a modular list','so i later turned this into a helper function i could use all the time']
 }
-display(['Welcome to my portfolio!','Once you are in the main menu, choose a project to get details.','There are four games to choose from.','Have fun!'],buttontext='continue',title_text='Portfolio')
-while True:
-    game = menu(['Westville Sheriff','Maze Generator','Movie Recommender','Pet Simulator','Quit'],prompt='Choose a game',title_text='Portfolio Main Menu')
-    if game == 'Quit':
-        break
-    if display(game_descriptions[game],buttontext='Play',alt_button_text='Menu'):
-        games[game]()
+def main_menu():
+    display(['Welcome to my portfolio!','Once you are in the main menu, choose a project to get details.','There are four games to choose from.','Have fun!'],buttontext='continue',title_text='Portfolio')
+    while True:
+        game = menu(['Westville Sheriff','Maze Generator','Movie Recommender','Pet Simulator','Quit'],prompt='Choose a game',title_text='Portfolio Main Menu')
+        if game == 'Quit':
+            break
+        if display(game_descriptions[game],buttontext='Play',alt_button_text='Menu'):
+            games[game]()
