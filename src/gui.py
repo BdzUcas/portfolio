@@ -49,30 +49,42 @@ def menu(options,prompt,title_text='Menu',width=0,height=0,titlesize=20,font='He
     root.mainloop()
     #return the result property of the Result object
     return result.result
-
+#display function
 def display(text=['No text provided'],font='Helvetica',fontsize=10,buttontext='exit',title_text='Display',alt_button_text=''):
+    #find longest text
     longest = 0
     for line in text:
         length = len(line)*fontsize*0.6
         if length > longest:
             longest = length
+    #create a screen
     root = Tk()
+    #determine amount of extra space to add (more if second button is enabled)
     button_space = 2
     if alt_button_text:
         button_space += 1
+    #change dimensions of screen to fit longest text and amount of text/buttons
     root.geometry(f'{int(longest+100)}x{int((len(text)+button_space)*fontsize*3)}')
     root.title(title_text)
+    #loop through the text
     for line in text:
+        #create a label with the line of text, and place it on the screen
         label = Label(root,text=line,font=(font,fontsize))
         label.pack(pady=fontsize/2)
-        result = Result()
+    #create a result object to store which button was bushed
+    result = Result()
+    #create a function for button pushing
     def destroy(result,return_val):
         result.result = return_val
         root.destroy()
+    #make the main button that always shows
     exit_button = Button(root,text=buttontext,command = lambda: destroy(result,True),font=(font,fontsize))
     exit_button.pack(pady=fontsize/2)
+    #if text is provided for a second button, make it too
     if alt_button_text:
         alt_button = Button(root,text=alt_button_text,command = lambda: destroy(result,False),font=(font,fontsize))
         alt_button.pack(pady=fontsize/2)
+    #run main loop
     root.mainloop()
+    #return the result of which button was pushed (true for main button, false for alt button)
     return result.result 
