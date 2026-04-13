@@ -1,53 +1,24 @@
-from tkinter import *
-#result class, used for passing information locally to globally
-class Result():
-    def __init__(self):
-        self.result = ''
-
-#menu function, for creating a menu with the given options
-def menu(options,prompt,title_text='Menu',width=0,height=0,titlesize=20,font='Helvetica',buttonsize=10):
-    #finds the longest bit of text out of the title and all the buttons
-    longest = len(prompt)*titlesize*0.6
-    for i in options:
-        length = len(i)*buttonsize*0.6
-        if length > longest:
-            longest = length
-    #if height is 0 (unset)
-    if height == 0:
-        #calculate height by amount of buttons and size of title and buttons
-        height = int(titlesize*4 + len(options) * buttonsize * 5)
-    #if width is 0 (unset)
-    if width == 0:
-        #calculate width based on longest text
-        width = int(longest) + 100
-    #create a screen
-    root = Tk()
-    root.title(title_text)
-    root.geometry(f'{width}x{height}')
-    #create a heading with given size and font
-    heading = Label(root,text=prompt,font=(font,titlesize))
-    heading.pack(pady=titlesize*1.5)
-    #create a Result object for storing what the user clicks on
-    result = Result()
-    #function that runs when a button is pushed
-    def button_push(result,text):
-        #set the result property of the given Result object to the text of the button
-        result.result = text
-        #kill the screen
-        root.destroy()
-    #make an empty list for the buttons
-    buttons = []
-    #loop through options
-    for option in options:
-        #make a button with given font and size that runs the button push function
-        button = Button(root,text=option,command = lambda option=option: button_push(result,option),font=(font,buttonsize))
-        #add it to the buttons list
-        buttons.append(button)
-        #put it on the screen
-        button.pack(pady=buttonsize/2)
-    #run the screen
-    root.mainloop()
-    #return the result property of the Result object
-    return result.result
-
-print(menu(['Option One','Option Two','Option Three'],'This is a menu'))
+from gui import *
+from movie_recommender import run_movie_searcher
+from text_adventure import run_adventure
+from maze_generator import run_maze_generator
+from pet_sim import game_flow
+games = {
+    "Westville Sheriff": run_adventure,
+    "Maze Generator": run_maze_generator,
+    "Movie Recommender": run_movie_searcher,
+    "Pet Simulator": game_flow.menu
+}
+game_descriptions = {
+    "Westville Sheriff": ['### Westville Sheriff ###','A text based adventure game where you play as the sheriff of a wild west town.','Use text prompts to navigate westville, gain information, and bargain with citizens.','When making this project i learned about UX design, making the experience pleasant for the user','I also got my first taste of working on a large-scale project.','It was very challenging to make things intuitive. I didn\'t anticipate so many things being unintuitive for the user'],
+    "Maze Generator": ['### Maze Generator ###','A simple program that generates a maze.','It uses recursive backtracking to make sure the maze is solvable from either end.','Close the window when you are done with your maze','When making it i learned how to do advanced data storage and logic','and how to make turtle draw efficiently.','It was difficult to figure out how to make a maze that was solvable every time.'],
+    "Movie Recommender": ['### Movie Recommender ###','A program that lets you search through a list of movies','It accepts multiple conditions based on many prerequisites such as rating, title, or director.','When making this project i learned how to sort through and utilize data from files.','I also learned how to store conditions and search with them.','I challenged myself to make my functions very modulat in this project.','I have used them many times since.'],
+    "Pet Simulator": ['### Pet Simulator ###','A game where you take care of pets.','Be careful, as everything you do costs time','Use text prompts to navigate your life as a pet owner and perform various actions such as shopping, working, and playing.','In this project i learned how to properly implement objects and classes','and how to store objects in files','It was challenging to implement proper choices off of a modular list','so i later turned this into a helper function i could use all the time']
+}
+display(['Welcome to my portfolio!','Once you are in the main menu, choose a project to get details.','There are four games to choose from.','Have fun!'],buttontext='continue',title_text='Portfolio')
+while True:
+    game = menu(['Westville Sheriff','Maze Generator','Movie Recommender','Pet Simulator','Quit'],prompt='Choose a game',title_text='Portfolio Main Menu')
+    if game == 'Quit':
+        break
+    if display(game_descriptions[game],buttontext='Play',alt_button_text='Menu'):
+        games[game]()

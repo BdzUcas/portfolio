@@ -1,0 +1,1 @@
+{"time": 14, "money": 75, "toys": ["rope"], "food": ["sand"], "pets": [{"name": "Rocko", "age": 0, "age_ticks": 0, "hunger": -20, "hapiness": 70, "boredom": 0, "diet": ["sand"], "type": "rock", "asleep": false, "status": "\u001b[32mhappy\u001b[0m"}], "last tick": 8}
